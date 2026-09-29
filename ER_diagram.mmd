@@ -1,0 +1,60 @@
+erDiagram
+    direction TB
+
+    users ||--o| carts : owns
+    users ||--o{ orders : places
+    categories ||--o{ products : contains
+    carts ||--o{ cart_items : contains
+    products ||--o{ cart_items : appears_in
+    orders ||--o{ order_items : contains
+    products ||--o{ order_items : appears_in
+
+    users {
+        bigint user_id PK
+        varchar name
+        varchar email UK
+        text password_hash
+    }
+
+    categories {
+        bigint category_id PK
+        varchar name UK
+    }
+
+    products {
+        bigint product_id PK
+        bigint category_id FK
+        varchar name
+        text description
+        numeric price
+        integer stock_quantity
+        text image_url
+    }
+
+    carts {
+        bigint cart_id PK
+        bigint user_id FK,UK
+    }
+
+    cart_items {
+        bigint cart_item_id PK
+        bigint cart_id FK
+        bigint product_id FK
+        integer quantity
+    }
+
+    orders {
+        bigint order_id PK
+        bigint user_id FK
+        timestamptz order_date
+        numeric total_amount
+        varchar status
+    }
+
+    order_items {
+        bigint order_item_id PK
+        bigint order_id FK
+        bigint product_id FK
+        integer quantity
+        numeric unit_price
+    }
